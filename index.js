@@ -11,7 +11,7 @@ app.use(cors())
 app.post('/', function (req, res) {
     var data = JSON.stringify({
         "from": req.body.from,
-        "to": [req.body.to],
+        "to": req.body.to,
         "body": req.body.message
       });
       
