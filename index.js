@@ -32,8 +32,31 @@ app.post('/', function (req, res) {
       .catch(function (error) {
         res.send(error);
       });
-      
+})
 
+app.post('/cgs', function (req, res) {
+    const apiURL = new URL("https://cheapglobalsms.com/api_v1");
+
+  apiURL.searchParams.append("message", req.body.message);
+  apiURL.searchParams.append("sender_id", req.body.sendersID);
+  apiURL.searchParams.append("action", "send_sms");
+  apiURL.searchParams.append("recipients", req.body.number);
+  apiURL.searchParams.append("sub_account", req.body.accountID)
+  apiURL.searchParams.append("sub_account_pass", req.body.authKey)
+
+    var config = {
+        method: 'get',
+        url: apiURL.href
+      };
+      
+      axios(config)
+      .then(function (response) {
+        res.send(response.data);
+      })
+      .catch(function (error) {
+        res.send(error.message);
+      });
+      
 })
 
 var server = app.listen(process.env.PORT || 5000, function () {
